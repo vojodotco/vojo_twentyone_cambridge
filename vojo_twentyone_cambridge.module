@@ -1,0 +1,76 @@
+<?php
+/**
+ * @file Provides VoIP Drupal functionality for the 21 Questions Cambridge project
+ */
+
+define("VOJO_TWENTYONE_CAMBRIDGE_HELP_NUMBER_VAR", 'vojo_twentyone_cambridge_help_number');
+
+/**
+ * Load up helpers
+ */
+function vojo_twentyone_cambridge_init(){
+  // load costom voip-drupal scripts
+  module_load_include('inc', 'vojo_twentyone_cambridge', 'vojo_twentyone_cambridge.script');
+}
+
+/**
+ * Return the script to run based on the script name
+ * Implementation of hook_voipscript_load_script().
+ */
+function vojo_twentyone_cambridge_voipscript_load_script($script_name, $params = NULL) {
+    if ($script_name == 'vojo_twentyone_cambridge_group') {
+      module_load_include('inc', 'vojo_twentyone_cambridge', 'vojo_twentyone_cambridge.script');
+      $node = node_load($params['nid']);
+      return _vojo_twentyone_cambridge_group_script($node);
+    }
+}
+
+/**
+ * Return the list of script names this module provides
+ * Implementation of hook_voipscript_get_script_names().
+ */
+function vojo_twentyone_cambridge_voipscript_get_script_names() {
+  return array(
+    'vojo_twentyone_cambridge_group',
+  );
+}
+
+/**
+ * Add a page to configure the module settings
+ **/
+function vojo_twentyone_cambridge_menu() {
+  $items['admin/settings/vojo_twentyone_cambridge'] = array(
+    'title' => 'Vojo 21 Questions Cambridge Settings',
+    'description' => 'Set up options for the group.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('vojo_twentyone_cambridge_admin_settings_form'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  
+  return $items;
+}
+
+/**
+ * Return the form to change settings for this module
+ */
+function vojo_twentyone_cambridge_admin_settings_form(&$form_state) {
+  $form = vojo_twentyone_cambridge_settings_fields($form_state);
+  return system_settings_form($form);
+}
+
+/**
+ * Return the fields for the form to change settings for this module
+ */
+function vojo_twentyone_cambridge_settings_fields(&$form_state, $field=FALSE) {
+
+  $form[VOJO_TWENTYONE_CAMBRIDGE_HELP_NUMBER_VAR] = array(
+    '#type' => 'textfield',
+    '#default_value' => variable_get(VOJO_TWENTYONE_CAMBRIDGE_HELP_NUMBER_VAR,''),
+    '#title' => t('Help Number'),
+    '#description' => t('Enter the phone number to redirect people to is they need help right away.'),
+  );
+
+  return $form;
+
+}

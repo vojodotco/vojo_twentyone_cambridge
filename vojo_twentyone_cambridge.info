@@ -1,0 +1,6 @@
+
+name = Vojo 21 Questions Cambridge
+description = Provides VoIP Drupal scripts for the 21QuestionsCambridge group.
+core = 6.x
+package = Vojo.co
+version = "6.x-0.1"
