@@ -87,7 +87,8 @@ function vojo_twentyone_cambridge_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
     switch ($op) {
       case 'alter':
         if ($node->build_mode == NODE_BUILD_RSS) {
-          $node->title = strip_tags($node->content['body']['#value']);
+          $node->title = strip_tags($node->content['body']['#value']);  // use full content as title
+          $node->og_groups_both = array();  // get rid of group info
         }
         break;
     }
