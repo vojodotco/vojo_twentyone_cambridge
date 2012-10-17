@@ -1,4 +1,7 @@
 <?php
+
+define('TWENTYONE_CAMBRIDGE_GROUP_ID', 12655);
+
 /**
  * @file Provides VoIP Drupal functionality for the 21 Questions Cambridge project
  */
@@ -73,4 +76,20 @@ function vojo_twentyone_cambridge_settings_fields(&$form_state, $field=FALSE) {
 
   return $form;
 
+}
+
+/**
+ * Change the RSS title element to be the full post body
+ * @see http://drupal.org/node/174359#comment-3047564
+ */
+function vojo_twentyone_cambridge_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
+  if ( ($node->type=='blog') && array_key_exists(TWENTYONE_CAMBRIDGE_GROUP_ID,$node->og_groups) ) {
+    switch ($op) {
+      case 'alter':
+        if ($node->build_mode == NODE_BUILD_RSS) {
+          $node->title = strip_tags($node->content['body']['#value']);
+        }
+        break;
+    }
+  }
 }
