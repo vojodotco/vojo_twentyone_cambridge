@@ -83,7 +83,7 @@ function vojo_twentyone_cambridge_settings_fields(&$form_state, $field=FALSE) {
  * @see http://drupal.org/node/174359#comment-3047564
  */
 function vojo_twentyone_cambridge_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
-  if ( ($node->type=='blog') && array_key_exists(TWENTYONE_CAMBRIDGE_GROUP_ID,$node->og_groups) ) {
+  if ( ($node->type=='blog') && is_array($node->og_groups) && array_key_exists(TWENTYONE_CAMBRIDGE_GROUP_ID,$node->og_groups) ) {
     switch ($op) {
       case 'alter':
         if ($node->build_mode == NODE_BUILD_RSS) {
