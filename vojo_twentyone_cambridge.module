@@ -26,6 +26,10 @@ function vojo_twentyone_cambridge_voipscript_load_script($script_name, $params =
       $node = node_load($params['nid']);
       return _vojo_twentyone_cambridge_group_script($node);
     }
+    if ($script_name == 'vojo_twentyone_cambridge_pick_language') {
+      module_load_include('inc', 'vojo_twentyone_cambridge', 'vojo_twentyone_cambridge.script');
+      return _vojo_twentyone_cambridge_pick_language_script();
+    }
 }
 
 /**
@@ -35,6 +39,7 @@ function vojo_twentyone_cambridge_voipscript_load_script($script_name, $params =
 function vojo_twentyone_cambridge_voipscript_get_script_names() {
   return array(
     'vojo_twentyone_cambridge_group',
+    'vojo_twentyone_cambridge_pick_language',
   );
 }
 
