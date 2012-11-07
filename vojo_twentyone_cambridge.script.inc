@@ -12,7 +12,7 @@
 function _vojo_twentyone_cambridge_group_script($node) {
   $script = new VoipScript('vojo_twentyone_cambridge_group');
 
-  $script->setVar('language', '');
+  $script->addSet('language', '');
   
   $script->addLabel('begin');
   if ($name = voipnode_get_title($node)) {
@@ -101,7 +101,6 @@ function _vojo_twentyone_cambridge_group_script($node) {
 function _vojo_twentyone_cambridge_pick_language_script(){
 
   $script = new VoipScript('vojo_twentyone_cambridge_pick_language');
-  $script->addLog('Running pick language script');
 
   // pick language menu
   $script->addLabel('menu');
@@ -114,19 +113,18 @@ function _vojo_twentyone_cambridge_pick_language_script(){
 
   // user picked english
   $script->addLabel('picked_en');
-  $script->setVar('language', 'en');
+  $script->addSet('language', 'en');
   $script->addGoSub('vojo_change_language', array('language'=>'en') );
   $script->addGoto('return');
 
   // user picked portuguese
   $script->addLabel('picked_pt');
-  $script->setVar('language', 'pt');
+  $script->addSet('language', 'pt');
   $script->addGoSub('vojo_change_language', array('language'=>'pt') );
   $script->addGoto('return');
 
   // return
   $script->addLabel('return');
-  $script->addLog('Selected language: %language');
   $script->addReturn();
 
   return $script;
